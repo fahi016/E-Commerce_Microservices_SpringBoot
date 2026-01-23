@@ -1,0 +1,13 @@
+spring.application.name=customer-service
+server.port=8090
+spring.data.mongodb.username=faheem
+spring.data.mongodb.password=faheem123
+spring.data.mongodb.host=localhost
+spring.data.mongodb.port=27017
+spring.data.mongodb.database=customer
+spring.data.mongodb.authentication-database=admin
+
+
+
+
+
