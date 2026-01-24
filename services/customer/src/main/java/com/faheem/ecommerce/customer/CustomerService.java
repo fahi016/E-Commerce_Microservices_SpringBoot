@@ -68,4 +68,8 @@ public class CustomerService {
                         )
                 );
     }
+
+    public void deleteCustomer(String customerId) {
+        repository.deleteById(customerId);
+    }
 }
