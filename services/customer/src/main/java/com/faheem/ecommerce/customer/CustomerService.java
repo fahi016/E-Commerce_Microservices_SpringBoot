@@ -59,7 +59,7 @@ public class CustomerService {
     }
 
     public CustomerResponse findById(String customerId) {
-        repository.findById(customerId)
+        return repository.findById(customerId)
                 .map(mapper::fromCustomer)
                 .orElseThrow(
                         ()-> new CustomerNotFoundException(
