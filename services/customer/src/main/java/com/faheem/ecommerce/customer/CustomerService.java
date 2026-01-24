@@ -1,8 +1,12 @@
 package com.faheem.ecommerce.customer;
 
+import com.faheem.ecommerce.exception.CustomerNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+
+import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
@@ -12,5 +16,32 @@ public class CustomerService {
     public String createCustomer(@Valid CustomerRequest request) {
         var customer = repository.save(mapper.toCustomer(request));
         return customer.getId();
+    }
+
+    public void updateCustomer(@Valid CustomerRequest request) {
+        var customer = repository.findById(request.id())
+                .orElseThrow(()-> new CustomerNotFoundException(
+                format("Cannot update customer:: customer not found with id:: %s",request.id())
+        ));
+        mergeCustomer(customer,request);
+        repository.save(customer);
+    }
+
+    private void mergeCustomer(Customer customer, @Valid CustomerRequest request) {
+        if(StringUtils.isNotBlank(request.firstName())){
+            customer.setFirstName(request.firstName());
+        }
+
+        if(StringUtils.isNotBlank(request.lastName())){
+            customer.setLastName(request.lastName());
+        }
+
+        if(StringUtils.isNotBlank(request.email())){
+            customer.setEmail(request.email());
+        }
+
+        if(request.address()!=null){
+            customer.setAddress(request.address());
+        }
     }
 }
