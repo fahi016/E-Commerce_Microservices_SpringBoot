@@ -2,6 +2,8 @@ package com.faheem.ecommerce.product;
 
 import com.faheem.ecommerce.category.Category;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,5 +31,15 @@ public class ProductMapper {
                  product.getCategory().getDescription()
          );
 
+    }
+
+    public ProductPurchaseResponse toProductPurchaseResponse(Product product, @NotNull(message = "Quantity is mandatory") @Positive(message = "Quantity should be positive") double quantity) {
+    return new ProductPurchaseResponse(
+            product.getId(),
+            product.getName(),
+            product.getDescription(),
+            product.getPrice(),
+            quantity
+    );
     }
 }

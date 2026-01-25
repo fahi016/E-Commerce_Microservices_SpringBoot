@@ -1,5 +1,6 @@
-package com.faheem.ecommerce.exception;
+package com.faheem.ecommerce.handler;
 
+import com.faheem.ecommerce.exception.CustomerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

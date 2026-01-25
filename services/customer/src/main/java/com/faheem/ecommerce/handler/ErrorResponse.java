@@ -1,4 +1,4 @@
-package com.faheem.ecommerce.exception;
+package com.faheem.ecommerce.handler;
 
 import java.util.Map;
 
