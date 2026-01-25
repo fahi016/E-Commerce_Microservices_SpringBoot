@@ -1,4 +1,4 @@
 package com.faheem.ecommerce.product;
 
-public record ProdcuResponse() {
+public record ProdcutResponse() {
 }

@@ -9,19 +9,22 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
-    public Integer createProduct(@Valid ProdcutRequest request) {
-        return  null;
+    private final ProductRepository repository;
+    private final ProductMapper mapper;
+    public Integer createProduct(@Valid ProductRequest request) {
+        var product = mapper.toProduct(request);
+        return repository.save(product).getId();
     }
 
     public List<ProductPurchaseResponse> purchaseProducts(@Valid ProductPurchaseRequest request) {
         return null;
     }
 
-    public ProdcuResponse findById() {
+    public ProdcutResponse findById() {
         return null;
     }
 
-    public List<ProdcuResponse> findAll() {
+    public List<ProdcutResponse> findAll() {
         return null;
     }
 }

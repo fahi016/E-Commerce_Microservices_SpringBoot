@@ -15,7 +15,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Integer> createProduct(
-            @RequestBody @Valid ProdcutRequest request
+            @RequestBody @Valid ProductRequest request
     ){
         return ResponseEntity.ok(service.createProduct(request));
 
@@ -29,14 +29,14 @@ public class ProductController {
     }
 
     @GetMapping("/{product-id}")
-    public ResponseEntity<ProdcuResponse> findById(
+    public ResponseEntity<ProdcutResponse> findById(
             @PathVariable("product-id") Integer productId
     ){
         return ResponseEntity.ok(service.findById());
     }
 
     @GetMapping
-    public ResponseEntity<List<ProdcuResponse>> findAll(){
+    public ResponseEntity<List<ProdcutResponse>> findAll(){
         return ResponseEntity.ok(service.findAll());
     }
 }
