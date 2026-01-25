@@ -29,14 +29,14 @@ public class ProductController {
     }
 
     @GetMapping("/{product-id}")
-    public ResponseEntity<ProdcutResponse> findById(
+    public ResponseEntity<ProductResponse> findById(
             @PathVariable("product-id") Integer productId
     ){
-        return ResponseEntity.ok(service.findById());
+        return ResponseEntity.ok(service.findById(productId));
     }
 
     @GetMapping
-    public ResponseEntity<List<ProdcutResponse>> findAll(){
+    public ResponseEntity<List<ProductResponse>> findAll(){
         return ResponseEntity.ok(service.findAll());
     }
 }

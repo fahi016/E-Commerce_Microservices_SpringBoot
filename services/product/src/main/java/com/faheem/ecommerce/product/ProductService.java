@@ -1,5 +1,6 @@
 package com.faheem.ecommerce.product;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,14 @@ public class ProductService {
         return null;
     }
 
-    public ProdcutResponse findById() {
-        return null;
+    public ProductResponse findById(Integer productId) {
+        return repository.findById(productId)
+                .map(mapper::toProductResponse)
+                .orElseThrow(()-> new EntityNotFoundException("Product not found with ID::" + productId));
+
     }
 
-    public List<ProdcutResponse> findAll() {
+    public List<ProductResponse> findAll() {
         return null;
     }
 }
