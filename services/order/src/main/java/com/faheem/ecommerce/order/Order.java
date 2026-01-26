@@ -1,6 +1,6 @@
 package com.faheem.ecommerce.order;
 
-import com.faheem.ecommerce.orderline;
+import com.faheem.ecommerce.orderline.OrderLine;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -32,7 +32,7 @@ public class Order {
     private PaymentMethod paymentMethod;
     private String customerId;
     @OneToMany(mappedBy = "order")
-    private List<orderline.OrderLine> orderLines;
+    private List<OrderLine> orderLines;
     @CreatedDate
     @Column(updatable = false,nullable = false)
     private LocalDateTime createdAt;
