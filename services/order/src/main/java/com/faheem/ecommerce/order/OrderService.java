@@ -4,6 +4,8 @@ package com.faheem.ecommerce.order;
 import com.faheem.ecommerce.PurchaseRequest;
 import com.faheem.ecommerce.customer.CustomerClient;
 import com.faheem.ecommerce.exception.BusinessException;
+import com.faheem.ecommerce.kafka.OrderConformation;
+import com.faheem.ecommerce.kafka.OrderProducer;
 import com.faheem.ecommerce.orderline.OrderLineRequest;
 import com.faheem.ecommerce.orderline.OrderLineService;
 import com.faheem.ecommerce.product.ProductClient;
@@ -22,13 +24,14 @@ public class OrderService {
     private final OrderRepository repository;
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
+    private final OrderProducer orderProducer;
     public Integer createOrder(@Valid OrderRequest request) {
         //check customer --> customerFeign
         var customer = customerClient.findCustomerById(request.customerId()).orElseThrow(
                 ()-> new BusinessException("Cannot create an order:: No customer exists with provided ID")
         );
         // purchase the products --> uses product micro service(Rest template)
-        this.productClient.purchaseProducts(request.products());
+        var purchasedProducts = this.productClient.purchaseProducts(request.products());
         // persist order
         var order = this.repository.save(mapper.toOrder(request));
         // persist order lines
@@ -44,6 +47,16 @@ public class OrderService {
         }
         //todo start payment process
         // send order conformation to notification micro service
-        return null;
+        orderProducer.sendOrderConformation(
+                new OrderConformation(
+                        request.reference(),
+                        request.amount(),
+                        request.paymentMethod(),
+                        customer,
+                        purchasedProducts
+
+                )
+        );
+        return order.getId();
     }
 }
