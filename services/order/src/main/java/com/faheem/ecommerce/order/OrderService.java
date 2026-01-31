@@ -49,6 +49,7 @@ public class OrderService {
                 );
         }
         //todo start payment process
+
         // send order conformation to notification micro service
         orderProducer.sendOrderConformation(
                 new OrderConformation(
