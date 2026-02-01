@@ -1,7 +1,9 @@
 package com.faheem.ecommerce.order;
 
 import jakarta.validation.Valid;
+import org.springframework.stereotype.Service;
 
+@Service
 public class OrderMapper {
 
     public Order toOrder(@Valid OrderRequest request) {

@@ -8,6 +8,8 @@ import com.faheem.ecommerce.kafka.OrderConformation;
 import com.faheem.ecommerce.kafka.OrderProducer;
 import com.faheem.ecommerce.orderline.OrderLineRequest;
 import com.faheem.ecommerce.orderline.OrderLineService;
+import com.faheem.ecommerce.payment.PaymentClient;
+import com.faheem.ecommerce.payment.PaymentRequest;
 import com.faheem.ecommerce.product.ProductClient;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -28,6 +30,7 @@ public class OrderService {
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
     public Integer createOrder(@Valid OrderRequest request) {
         //check customer --> customerFeign
         var customer = customerClient.findCustomerById(request.customerId()).orElseThrow(
@@ -48,7 +51,15 @@ public class OrderService {
                         )
                 );
         }
-        //todo start payment process
+        //start payment process
+        var paymentRequest = new PaymentRequest(
+                request.amount(),
+                request.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customer
+        );
+        paymentClient.requestOrderPayment(paymentRequest);
 
         // send order conformation to notification micro service
         orderProducer.sendOrderConformation(
