@@ -10,8 +10,9 @@ public class PaymentService {
     private final PaymentRepository repository;
     private final paymentMapper mapper;
 
-//    public Integer createPayment(PaymentRequest request) {
-//        var payment = repository.save(mapper.toPayment(request));
-//
-//    }
+    public Integer createPayment(PaymentRequest request) {
+        var payment = repository.save(mapper.toPayment(request));
+        return null;
+
+    }
 }
