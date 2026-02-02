@@ -5,15 +5,16 @@ import com.faheem.ecommerce.kafka.payment.PaymentMethod;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class OrderConfirmation {
-    String orderReference;
+public record OrderConfirmation(
+    String orderReference,
 
-    BigDecimal totalAmount;
+    BigDecimal totalAmount,
 
-    PaymentMethod paymentMethod;
+    PaymentMethod paymentMethod,
 
-    Customer customer;
+    Customer customer,
 
-    List<Product> products;
-
+    List<Product> products
+    )
+{
 }
